@@ -1,8 +1,76 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>org.litesoft</groupId>
     <artifactId>annotation</artifactId>
     <version>1.0.1</version>
+
+    <name>litesoft-java-annotations</name>
+    <description>A set of Java Annotations primarily used for documenting contractual obligations and expectations</description>
+    <url>https://github.com/litesoft/LiteSoftJavaAnnotations</url>
+
+    <licenses>
+        <license>
+            <name>The Unlicense</name>
+            <url>https://github.com/litesoft/LiteSoftJavaAnnotations/blob/master/LICENSE</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>George Smith</name>
+            <email>litesoft@gmail.com</email>
+            <organization>LiteSoft</organization>
+            <organizationUrl>http://LiteSoft.org</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/litesoft/LiteSoftJavaAnnotations.git</connection>
+        <developerConnection>scm:git:ssh://github.com:litesoft/LiteSoftJavaAnnotations.git</developerConnection>
+        <url>https://github.com/litesoft/LiteSoftJavaAnnotations</url>
+    </scm>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--<dep.guava.version>19.0</dep.guava.version>-->
+    </properties>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
 
 </project>

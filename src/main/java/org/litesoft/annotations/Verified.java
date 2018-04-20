@@ -6,6 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * This Annotation is used to flag (primarily) parameters, as not needing the other Annotation contracts
+ * to be checked as it is only called by other methods that HAVE checked the parameters being received.
+ * <p>
  * This class has been derived from the public domain code at: https://github.com/litesoft/LiteSoftCommonFoundation
  */
 @Retention(RetentionPolicy.CLASS)
