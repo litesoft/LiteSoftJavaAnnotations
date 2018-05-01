@@ -36,11 +36,21 @@
         <activeProfile>nexus</activeProfile>
     </activeProfiles>
     <servers>
-        <!-- For Open Source -->
+        <!-- These for Open Source -->
+        <server>
+            <id>snapshots</id>
+            <username>{username for 'ossrh'}</username>
+            <password>{password for 'ossrh'}</password>
+        </server>
+        <server>
+            <id>releases</id>
+            <username>{username for 'ossrh'}</username>
+            <password>{password for 'ossrh'}</password>
+        </server>
         <server>
             <id>ossrh</id>
-            <username>{username for 'snapshots'}</username>
-            <password>{password for 'snapshots'}</password>
+            <username>{username for 'ossrh'}</username>
+            <password>{password for 'ossrh'}</password>
         </server>
     </servers>
 </settings>
