@@ -12,6 +12,7 @@ import org.litesoft.annotations.Nullable;
 import org.litesoft.annotations.Significant;
 import org.litesoft.annotations.SignificantOrNull;
 import org.litesoft.annotations.Verified;
+import org.litesoft.annotations.expectations.Expectation;
 
 @SuppressWarnings("unused")
 public interface Validation {
@@ -130,7 +131,7 @@ public interface Validation {
 
       @Override
       public String format( Class<?> pHost, Object pHostId ) {
-        String zHostRef = NotNull.Assert.namedValue( "Host", pHost ).getSimpleName();
+        String zHostRef = NotNull.AssertArgument.namedValue( "Host", pHost ).getSimpleName();
         if ( pHostId != null ) {
           String zStringHostId = Significant.ConstrainTo.valueOrNull( pHostId.toString() );
           if ( zStringHostId != null ) {
@@ -199,7 +200,7 @@ public interface Validation {
                                         @DefaultingOnInsignificant String pFieldRef,
                                         @Significant @Verified String pError ) {
 
-      pFieldRef = Significant.ConstrainTo.valueOr( pFieldRef, IllegalArgument.DEFAULT_ON_INSIGNIFICANT );
+      pFieldRef = Significant.ConstrainTo.valueOr( pFieldRef, Expectation.DEFAULT_ON_INSIGNIFICANT );
       Map<String, List<String>> zExistingFieldErrors = new HashMap<String, List<String>>( pExistingFieldErrors );
       List<String> zErrors = zExistingFieldErrors.get( pFieldRef );
       if ( zErrors == null ) {

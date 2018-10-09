@@ -5,7 +5,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.litesoft.validation.IllegalArgument;
+import org.litesoft.annotations.expectations.Expectation;
+import org.litesoft.annotations.expectations.IllegalArgument;
 
 /**
  * This class has been derived from the public domain code at: https://github.com/litesoft/LiteSoftCommonFoundation
@@ -44,13 +45,21 @@ public @interface Significant {
 
   @SuppressWarnings({"WeakerAccess", "unused"})
   class Assert {
-    public static String namedValue( String pName, String pToCheck )
+    public static String namedValueExpectation( String pName, String pToCheck, Expectation pExpectation )
             throws IllegalArgumentException {
       String zResult = ConstrainTo.valueOrNull( pToCheck );
-      if ( zResult != null ) {
-        return zResult;
+      if ( zResult == null ) {
+        pExpectation.unmet( pName, pToCheck, "Significant" );
       }
-      throw IllegalArgument.expectationUnmet( pName, pToCheck, "Significant" );
+      return zResult;
+    }
+  }
+
+  @SuppressWarnings({"WeakerAccess", "unused"})
+  class AssertArgument {
+    public static String namedValue( String pName, String pToCheck )
+            throws IllegalArgumentException {
+      return Assert.namedValueExpectation( pName, pToCheck, IllegalArgument.INSTANCE );
     }
   }
 
