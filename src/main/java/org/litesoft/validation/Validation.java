@@ -155,17 +155,24 @@ public interface Validation {
 
       private void addHostErrors( StringBuilder pSB ) {
         if ( !mHostErrors.isEmpty() ) {
-          addErrors( pSB, mHostErrors, 1, "Host Errors" );
+          addErrors( pSB, mHostErrors, 1, "Host Error", "s" );
         }
       }
 
       private void addFieldErrors( StringBuilder pSB ) {
         if ( !mErrorsByFieldRef.isEmpty() ) {
-          newLineIndented( pSB, 1 ).append( "Field Errors:" );
-          ArrayList<String> zFieldRefs = new ArrayList<String>( mErrorsByFieldRef.keySet() );
+          List<String> zFieldRefs = new ArrayList<String>( mErrorsByFieldRef.keySet() );
+          if ( zFieldRefs.size() == 1 ) {
+            String zKey = zFieldRefs.get( 0 );
+            String zSingularLabel = "Field '" + zKey + "' Error";
+            List<String> zErrors = mErrorsByFieldRef.get( zKey );
+            addErrors( pSB, mErrorsByFieldRef.get( zKey ), 1, zSingularLabel, "s" );
+            return;
+          }
           Collections.sort( zFieldRefs );
+          newLineIndented( pSB, 1 ).append( "Field Errors:" );
           for ( String zFieldRef : zFieldRefs ) {
-            addErrors( pSB, mErrorsByFieldRef.get( zFieldRef ), 2, zFieldRef );
+            addErrors( pSB, mErrorsByFieldRef.get( zFieldRef ), 2, zFieldRef, "" );
           }
         }
       }
@@ -178,10 +185,16 @@ public interface Validation {
         return pSB;
       }
 
-      private void addErrors( StringBuilder pSB, List<String> pErrors, int pIndents, String pLabel ) {
-        newLineIndented( pSB, pIndents++ ).append( pLabel ).append( ':' );
+      private void addErrors( StringBuilder pSB, List<String> pErrors, int pIndents,
+                              String pSingularLabel, String pPluralSuffix ) {
+        newLineIndented( pSB, pIndents++ ).append( pSingularLabel );
+        if ( pErrors.size() == 1 ) {
+          pSB.append( ": " ).append( pErrors.get( 0 ) );
+          return;
+        }
+        pSB.append( pPluralSuffix ).append( ":" );
         for ( String zError : pErrors ) {
-          newLineIndented( pSB, pIndents++ ).append( zError );
+          newLineIndented( pSB, pIndents ).append( zError );
         }
       }
     }
