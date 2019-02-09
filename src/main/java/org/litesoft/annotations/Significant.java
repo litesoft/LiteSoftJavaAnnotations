@@ -7,22 +7,36 @@ import java.lang.annotation.Target;
 
 import org.litesoft.annotations.expectations.Expectation;
 import org.litesoft.annotations.expectations.IllegalArgument;
+import org.litesoft.annotations.expectations.Validator;
 
 /**
  * This class has been derived from the public domain code at: https://github.com/litesoft/LiteSoftCommonFoundation
  */
+@SuppressWarnings({"WeakerAccess", "unused"})
 @Retention(RetentionPolicy.CLASS)
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE})
 public @interface Significant {
+  String EXPECTATION = "Significant";
 
-  @SuppressWarnings({"WeakerAccess", "unused"})
+  /**
+   * @see Validator
+   */
+  class Validate {
+    public static boolean value( String pName, String pToCheck, Expectation pExpectation ) {
+      boolean zAcceptable = Check.value( pToCheck );
+      if ( !zAcceptable ) {
+        pExpectation.unmet( pName, pToCheck, EXPECTATION );
+      }
+      return zAcceptable;
+    }
+  }
+
   class Check {
     public static boolean value( String pToCheck ) {
       return (null != ConstrainTo.valueOrNull( pToCheck ));
     }
   }
 
-  @SuppressWarnings({"WeakerAccess", "unused"})
   class ConstrainTo {
     public static String valueOrNull( String pToCheck ) {
       return valueOr( pToCheck, null );
@@ -43,33 +57,21 @@ public @interface Significant {
     }
   }
 
-  @SuppressWarnings({"WeakerAccess", "unused"})
   class Assert {
     public static String namedValueExpectation( String pName, String pToCheck, Expectation pExpectation )
             throws IllegalArgumentException {
       String zResult = ConstrainTo.valueOrNull( pToCheck );
       if ( zResult == null ) {
-        pExpectation.unmet( pName, pToCheck, "Significant" );
+        pExpectation.unmet( pName, pToCheck, EXPECTATION );
       }
       return zResult;
     }
   }
 
-  @SuppressWarnings({"WeakerAccess", "unused"})
   class AssertArgument {
     public static String namedValue( String pName, String pToCheck )
             throws IllegalArgumentException {
       return Assert.namedValueExpectation( pName, pToCheck, IllegalArgument.INSTANCE );
-    }
-  }
-
-  class Validate {
-    public static String currently( String pToCheck ) {
-      return null;
-    }
-
-    public static String confirm( String pName, String pToCheck ) {
-      return pToCheck;
     }
   }
 }

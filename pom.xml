@@ -6,7 +6,7 @@
 
     <groupId>org.litesoft</groupId>
     <artifactId>annotations</artifactId>
-    <version>1.0.11-SNAPSHOT</version>
+    <version>1.0.13-SNAPSHOT</version>
 
     <name>litesoft-java-annotations</name>
     <description>A set of Java Annotations primarily used for documenting contractual obligations and expectations</description>
@@ -53,8 +53,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.6</maven.compiler.source>
-        <maven.compiler.target>1.6</maven.compiler.target>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <!--<dep.guava.version>19.0</dep.guava.version>-->
     </properties>
 

@@ -11,6 +11,7 @@ import java.lang.annotation.Target;
  * <p>
  * This class has been derived from the public domain code at: https://github.com/litesoft/LiteSoftCommonFoundation
  */
+@SuppressWarnings("unused")
 @Retention(RetentionPolicy.CLASS)
 @Target({ElementType.CONSTRUCTOR, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE})
 public @interface Verified {

@@ -108,7 +108,7 @@ public class ValidationTest {
   }
 
   private static class FieldErrors {
-    private Map<String, List<String>> mExpected = new HashMap<String, List<String>>();
+    private Map<String, List<String>> mExpected = new HashMap<>();
 
     FieldErrors add( String pFieldRef, String... pErrors ) {
       mExpected.put( pFieldRef, Arrays.asList( pErrors ) );

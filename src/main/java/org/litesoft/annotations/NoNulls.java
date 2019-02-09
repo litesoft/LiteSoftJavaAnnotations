@@ -8,6 +8,7 @@ import java.lang.annotation.Target;
 /**
  * This class has been derived from the public domain code at: https://github.com/litesoft/LiteSoftCommonFoundation
  */
+@SuppressWarnings("unused")
 @Retention(RetentionPolicy.CLASS)
 @Target({
         ElementType.FIELD,

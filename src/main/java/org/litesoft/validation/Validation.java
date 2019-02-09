@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.litesoft.annotations.DefaultingOnInsignificant;
+import org.litesoft.annotations.Immutable;
 import org.litesoft.annotations.NotNull;
 import org.litesoft.annotations.Nullable;
 import org.litesoft.annotations.Significant;
@@ -22,9 +23,11 @@ public interface Validation {
   boolean hasErrors();
 
   @NotNull
+  @Immutable
   List<String> getHostErrors();
 
   @NotNull
+  @Immutable
   Map<String, List<String>> getFieldErrors();
 
   /**
@@ -92,10 +95,11 @@ public interface Validation {
     }
 
     class WithErrors implements Validation {
-      private final List<String> mHostErrors;
-      private final Map<String, List<String>> mErrorsByFieldRef;
+      private final List<String> mHostErrors; // NotNull & Immutable
+      private final Map<String, List<String>> mErrorsByFieldRef; // NotNull & Immutable
 
-      private WithErrors( List<String> pHostErrors, Map<String, List<String>> pErrorsByFieldRef ) {
+      private WithErrors( @NotNull @Immutable @Verified List<String> pHostErrors,
+                          @NotNull @Immutable @Verified Map<String, List<String>> pErrorsByFieldRef ) {
         mHostErrors = pHostErrors;
         mErrorsByFieldRef = pErrorsByFieldRef;
       }
@@ -161,7 +165,7 @@ public interface Validation {
 
       private void addFieldErrors( StringBuilder pSB ) {
         if ( !mErrorsByFieldRef.isEmpty() ) {
-          List<String> zFieldRefs = new ArrayList<String>( mErrorsByFieldRef.keySet() );
+          List<String> zFieldRefs = new ArrayList<>( mErrorsByFieldRef.keySet() );
           if ( zFieldRefs.size() == 1 ) {
             String zKey = zFieldRefs.get( 0 );
             String zSingularLabel = "Field '" + zKey + "' Error";
@@ -199,13 +203,12 @@ public interface Validation {
       }
     }
 
-    private Validation addHostErrorTo( @NotNull @Verified List<String> pExistingHostErrors,
-                                       @NotNull @Verified Map<String, List<String>> pExistingFieldErrors,
+    private Validation addHostErrorTo( @NotNull @Immutable @Verified List<String> pExistingHostErrors,
+                                       @NotNull @Immutable @Verified Map<String, List<String>> pExistingFieldErrors,
                                        @Significant @Verified String pError ) {
 
-      List<String> zErrors = new ArrayList<String>( pExistingHostErrors );
-      zErrors.add( pError );
-      return new WithErrors( zErrors, pExistingFieldErrors );
+      return new WithErrors( addErrorTo( pExistingHostErrors, pError ),
+                             pExistingFieldErrors );
     }
 
     private Validation addFieldErrorTo( @NotNull @Verified List<String> pExistingHostErrors,
@@ -214,13 +217,23 @@ public interface Validation {
                                         @Significant @Verified String pError ) {
 
       pFieldRef = Significant.ConstrainTo.valueOr( pFieldRef, Expectation.DEFAULT_ON_INSIGNIFICANT );
-      Map<String, List<String>> zExistingFieldErrors = new HashMap<String, List<String>>( pExistingFieldErrors );
-      List<String> zErrors = zExistingFieldErrors.get( pFieldRef );
-      if ( zErrors == null ) {
-        zExistingFieldErrors.put( pFieldRef, zErrors = new ArrayList<String>() );
+      Map<String, List<String>> zNewFieldErrors = new HashMap<>( pExistingFieldErrors );
+      zNewFieldErrors.put( pFieldRef, addErrorTo( zNewFieldErrors.get( pFieldRef ), pError ) );
+      return new WithErrors( pExistingHostErrors,
+                             Collections.unmodifiableMap( zNewFieldErrors ) );
+    }
+
+    @NotNull
+    @Immutable
+    private List<String> addErrorTo( @Nullable @Immutable List<String> pExistingErrors,
+                                     @Significant @Verified String pError ) {
+
+      List<String> zErrors = new ArrayList<>();
+      if ( pExistingErrors != null ) {
+        zErrors.addAll( pExistingErrors );
       }
       zErrors.add( pError );
-      return new WithErrors( pExistingHostErrors, zExistingFieldErrors );
+      return Collections.unmodifiableList( zErrors );
     }
   };
 }
