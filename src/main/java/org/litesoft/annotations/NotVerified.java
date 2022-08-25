@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This class has been derived from the public domain code at: https://github.com/litesoft/LiteSoftCommonFoundation
+ * This class has been derived from the public domain code at: <a href="https://github.com/litesoft/LiteSoftCommonFoundation">LiteSoftCommonFoundation</a>
  */
 @SuppressWarnings("unused")
 @Retention(RetentionPolicy.CLASS)

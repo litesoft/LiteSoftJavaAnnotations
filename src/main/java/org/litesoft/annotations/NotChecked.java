@@ -6,9 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This Annotation is used to flag (primarily) parameters, as not checking the other Annotation's contracts.
+ * This Annotation is used to flag (primarily) parameters, that are not checked.
  * <p>
- * This class has been derived from the public domain code at: https://github.com/litesoft/LiteSoftCommonFoundation
+ * This class has been derived from the public domain code at: <a href="https://github.com/litesoft/LiteSoftCommonFoundation">LiteSoftCommonFoundation</a>
  */
 @SuppressWarnings({"unused", "WeakerAccess"})
 @Retention(RetentionPolicy.CLASS)
