@@ -54,12 +54,33 @@ public @interface NotNull {
             }
             return pToCheck;
         }
+
+        public static <T> T errorOn( String pName, T pToCheck ) {
+            if ( pToCheck != null ) {
+                return pToCheck;
+            }
+            throw new Error( "No '" + pName + "' provided -- coding error" );
+        }
     }
 
     class AssertArgument {
         public static <T> T namedValue( String pName, T pToCheck )
                 throws IllegalArgumentException {
             return Assert.namedValueExpectation( pName, pToCheck, IllegalArgument.INSTANCE );
+        }
+    }
+
+    class Count {
+        public static int of( Object... pObjects ) {
+            int count = 0;
+            if ( pObjects != null ) {
+                for ( Object o : pObjects ) {
+                    if ( o != null ) {
+                        count++;
+                    }
+                }
+            }
+            return count;
         }
     }
 }
