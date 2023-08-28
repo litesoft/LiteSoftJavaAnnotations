@@ -7,6 +7,6 @@ On maven Central ([latest release](https://mvnrepository.com/artifact/org.liteso
   <dependency/>
     <groupId>org.litesoft</groupId>
     <artifactId>annotations</artifactId>
-    <version>1.1.2</version>
+    <version>1.1.3</version>
   </dependency>
 ```
