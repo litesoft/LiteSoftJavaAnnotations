@@ -16,6 +16,8 @@ import org.litesoft.annotations.expectations.Validator;
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE})
 public @interface Required {
     /**
+     * TODO: AssertArgument, AssertState, AssertError
+     *
      * @see Validator
      */
     class Validate {

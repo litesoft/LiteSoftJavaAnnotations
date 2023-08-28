@@ -10,8 +10,8 @@ public class Assert_rUntypedWithExpectation extends UnmetCheck {
 
     public Assert_rUntypedWithExpectation( String pExpectationString, Check_r<Object> pChecker, Expectation pExpectation ) {
         super( pExpectationString );
-        mChecker = pChecker;
-        mExpectation = pExpectation;
+        mChecker = assertNotNull( pChecker );
+        mExpectation = assertNotNull( pExpectation );
     }
 
     public <T> T namedValue( String pName, T pToCheck ) {

@@ -24,13 +24,15 @@ public @interface NotEmpty {
 
     Check_rWithCollection<String> Check = new Check_rWithCollection<>( c -> !c.isEmpty() ) {
         @Override
-        protected boolean notNullText( String pToCheck ) {
+        protected boolean notNullTestT( String pToCheck ) {
             return !pToCheck.isEmpty();
         }
     };
 
+    // Legacy
     Validate_rWithCollection<String> Validate = new Validate_rWithCollection<>( EXPECTATION, Check );
 
+    // Legacy
     Assert_rTypedWithCollection<String> Assert = new Assert_rTypedWithCollection<>( EXPECTATION, Check );
 
     Assert_rTypedWithExpectationWithCollection<String> AssertArgument = new Assert_rTypedWithExpectationWithCollection<>( EXPECTATION, Check, IllegalArgument.INSTANCE );

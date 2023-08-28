@@ -24,10 +24,13 @@ public @interface NotNull {
 
     Check_r<Object> Check = new Check_r<>();
 
+    // Legacy
     Validate_r<Object> Validate = new Validate_r<>( EXPECTATION, Check );
 
+    // Legacy
     Assert_rUntypedWithLegacyErrorOn Assert = new Assert_rUntypedWithLegacyErrorOn( EXPECTATION, Check );
 
+    // TODO: AssertArgument AND AssertArgument2
     Assert_rUntypedWithExpectation AssertArgument2 = new Assert_rUntypedWithExpectation( EXPECTATION, Check, IllegalArgument.INSTANCE );
     Assert_rUntypedWithExpectation AssertState = new Assert_rUntypedWithExpectation( EXPECTATION, Check, IllegalState.INSTANCE );
     Assert_rUntypedWithExpectation AssertError = new Assert_rUntypedWithExpectation( EXPECTATION, Check, ThrowError.INSTANCE );

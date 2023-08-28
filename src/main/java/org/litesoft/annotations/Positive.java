@@ -23,6 +23,8 @@ public @interface Positive {
     double ZERO_double = 0;
 
     /**
+     * TODO: AssertArgument, AssertState, AssertError
+     *
      * @see Validator
      */
     class Validate {

@@ -5,6 +5,11 @@ import java.util.function.Supplier;
 
 import org.litesoft.annotations.expectations.Expectation;
 
+/**
+ * An Assert_r with initialized <code>Expectation</code> that adds support for Collections.
+ *
+ * @param <T> the type to be asserted FOR NON-COLLECTIONS!
+ */
 public class Assert_rTypedWithExpectationWithCollection<T> extends Assert_rTypedWithExpectation<T> {
     private final Check_rWithCollection<T> mChecker;
 
