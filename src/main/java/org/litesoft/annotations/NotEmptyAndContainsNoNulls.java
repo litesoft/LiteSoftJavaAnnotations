@@ -23,7 +23,7 @@ public @interface NotEmptyAndContainsNoNulls {
      * @see Validator
      */
     class Validate {
-        public static <Entry, T extends Collection<Entry>> boolean value( String pName, T pToCheck, Expectation pExpectation ) {
+        public static <T extends Collection<?>> boolean value( String pName, T pToCheck, Expectation pExpectation ) {
             boolean zAcceptable = Check.value( pToCheck );
             if ( !zAcceptable ) {
                 pExpectation.unmet( pName, pToCheck, EXPECTATION );
@@ -33,14 +33,14 @@ public @interface NotEmptyAndContainsNoNulls {
     }
 
     class Check {
-        public static <Entry, T extends Collection<Entry>> boolean value( T pToCheck ) {
+        public static <T extends Collection<?>> boolean value( T pToCheck ) {
             return (null != pToCheck) && !pToCheck.isEmpty() // Left to Right!
                    && NotNullAndContainsNoNulls.Check.anyNulls( pToCheck );
         }
     }
 
     class Assert {
-        public static <Entry, T extends Collection<Entry>> T namedValueExpectation( String pName, T pToCheck, Expectation pExpectation ) {
+        public static <T extends Collection<?>> T namedValueExpectation( String pName, T pToCheck, Expectation pExpectation ) {
             boolean zAcceptable = Check.value( pToCheck );
             if ( !zAcceptable ) {
                 pExpectation.unmet( pName, null, EXPECTATION );
@@ -50,7 +50,7 @@ public @interface NotEmptyAndContainsNoNulls {
     }
 
     class AssertArgument {
-        public static <Entry, T extends Collection<Entry>> T namedValue( String pName, T pToCheck )
+        public static <T extends Collection<?>> T namedValue( String pName, T pToCheck )
                 throws IllegalArgumentException {
             return Assert.namedValueExpectation( pName, pToCheck, IllegalArgument.INSTANCE );
         }

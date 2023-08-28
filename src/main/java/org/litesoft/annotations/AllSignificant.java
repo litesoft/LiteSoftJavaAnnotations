@@ -10,11 +10,6 @@ import java.lang.annotation.Target;
  */
 @SuppressWarnings("unused")
 @Retention(RetentionPolicy.CLASS)
-@Target({
-        ElementType.FIELD,
-        ElementType.METHOD,
-        ElementType.PARAMETER,
-        ElementType.LOCAL_VARIABLE
-})
+@Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE})
 public @interface AllSignificant {
 }

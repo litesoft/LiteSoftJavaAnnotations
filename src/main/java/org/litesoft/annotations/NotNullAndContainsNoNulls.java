@@ -23,7 +23,7 @@ public @interface NotNullAndContainsNoNulls {
      * @see Validator
      */
     class Validate {
-        public static <Entry, T extends Collection<Entry>> boolean value( String pName, T pToCheck, Expectation pExpectation ) {
+        public static <T extends Collection<?>> boolean value( String pName, T pToCheck, Expectation pExpectation ) {
             boolean zAcceptable = Check.value( pToCheck );
             if ( !zAcceptable ) {
                 pExpectation.unmet( pName, pToCheck, EXPECTATION );
@@ -33,13 +33,13 @@ public @interface NotNullAndContainsNoNulls {
     }
 
     class Check {
-        public static <Entry, T extends Collection<Entry>> boolean value( T pToCheck ) {
+        public static <T extends Collection<?>> boolean value( T pToCheck ) {
             return (null != pToCheck) && anyNulls( pToCheck );
         }
 
-        static <Entry, T extends Collection<Entry>> boolean anyNulls( @NotNull @NotChecked T pToCheck ) {
-            for ( Entry zEntry : pToCheck ) {
-                if ( zEntry == null ) {
+        static <T extends Collection<?>> boolean anyNulls( @NotNull @NotChecked T pToCheck ) {
+            for ( Object entry : pToCheck ) {
+                if ( entry == null ) {
                     return false;
                 }
             }
@@ -48,7 +48,7 @@ public @interface NotNullAndContainsNoNulls {
     }
 
     class Assert {
-        public static <Entry, T extends Collection<Entry>> T namedValueExpectation( String pName, T pToCheck, Expectation pExpectation ) {
+        public static <T extends Collection<?>> T namedValueExpectation( String pName, T pToCheck, Expectation pExpectation ) {
             boolean zAcceptable = Check.value( pToCheck );
             if ( !zAcceptable ) {
                 pExpectation.unmet( pName, null, EXPECTATION );
@@ -58,7 +58,7 @@ public @interface NotNullAndContainsNoNulls {
     }
 
     class AssertArgument {
-        public static <Entry, T extends Collection<Entry>> T namedValue( String pName, T pToCheck )
+        public static <T extends Collection<?>> T namedValue( String pName, T pToCheck )
                 throws IllegalArgumentException {
             return Assert.namedValueExpectation( pName, pToCheck, IllegalArgument.INSTANCE );
         }
