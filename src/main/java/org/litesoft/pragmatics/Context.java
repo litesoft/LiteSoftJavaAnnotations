@@ -1,4 +1,4 @@
-package org.litesoft.context;
+package org.litesoft.pragmatics;
 
 import java.util.function.Supplier;
 

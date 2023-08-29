@@ -1,4 +1,4 @@
-package org.litesoft.context;
+package org.litesoft.pragmatics;
 
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +8,7 @@ class ContextTest {
 
     @Test
     void get() {
-        check(new Context( " Hello " ), "Hello");
+        check( new Context( " Hello " ), "Hello");
         check(new Context( () -> " Hello " ), " Hello ");
         check(new Context( () -> null ), null);
         check(new Context( " ! " ).with( () -> null ), "!null");
