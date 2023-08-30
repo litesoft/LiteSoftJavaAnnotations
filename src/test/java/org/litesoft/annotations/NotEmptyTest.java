@@ -4,6 +4,13 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.litesoft.annotations.support.Assert_rTyped;
+import org.litesoft.annotations.support.Assert_rTypedWithCollection;
+import org.litesoft.annotations.support.Assert_rTypedWithExpectationWithCollection;
+import org.litesoft.annotations.support.Check_r;
+import org.litesoft.annotations.support.Check_rWithCollection;
+import org.litesoft.annotations.support.Validate_r;
+import org.litesoft.annotations.support.Validate_rWithCollection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,135 +20,100 @@ class NotEmptyTest extends TestSupport {
         return NotEmpty.EXPECTATION;
     }
 
+    private static final List<CheckParams<String>> OurStringParams = new ListOf<CheckParams<String>>()
+            .with( new CheckParams<>( true, "Space", " " ) )
+            .with( new CheckParams<>( false, "!Space", "" ) )
+            .with( new CheckParams<>( false, "null", null ) );
+
+    private static final List<CheckParamsList<String>> OurListParams = new ListOf<CheckParamsList<String>>()
+            .with( new CheckParamsList<>( true, "Spaces", Collections.singletonList( " " ) ) )
+            .with( new CheckParamsList<>( false, "!Spaces", Collections.emptyList() ) )
+            .with( new CheckParamsList<>( false, "nullList", null ) );
+
     @Test
     void _Check() {
-        assertTrue( NotEmpty.Check.value( " " ) );
-        assertFalse( NotEmpty.Check.value( "" ) );
-        assertFalse( NotEmpty.Check.value( (String)null ) );
-
-        assertTrue( NotEmpty.Check.value( Collections.singletonList( " " ) ) );
-        assertFalse( NotEmpty.Check.value( Collections.emptyList() ) );
-        assertFalse( NotEmpty.Check.value( (List<String>)null ) );
+        check_Check( NotEmpty.Check, OurStringParams );
+        check_CheckList( NotEmpty.Check, OurListParams );
     }
 
     @Test
     void _Validate() {
-        checkV( true, "Spaces", Collections.singletonList( " " ) );
-        checkV( true, "Space", " " );
-        checkV( false, "!Spaces", Collections.emptyList() );
-        checkV( false, "!Space", "" );
-        checkV( false, "null", (String)null );
-        checkV( false, "nullList", (List<String>)null );
-    }
-
-    void checkV( boolean expected, String pContext, String pToCheck ) {
-        Exp expectation = new Exp();
-        assertEquals( expected, NotEmpty.Validate.value( pContext, pToCheck, expectation ) );
-        checkExpectation( expected, expectation.params, pContext, pToCheck );
-    }
-
-    void checkV( boolean expected, String pContext, List<String> pToCheck ) {
-        Exp expectation = new Exp();
-        assertEquals( expected, NotEmpty.Validate.value( pContext, pToCheck, expectation ) );
-        checkExpectation( expected, expectation.params, pContext, pToCheck );
+        check_Validate( NotEmpty.Validate, OurStringParams );
+        check_ValidateList( NotEmpty.Validate, OurListParams );
     }
 
     @Test
     void _Assert() {
-        checkA( true, "Spaces", Collections.singletonList( " " ) );
-        checkA( true, "Space", " " );
-        checkA( false, "!Spaces", Collections.emptyList() );
-        checkA( false, "!Space", "" );
-        checkA( false, "null", (String)null );
-        checkA( false, "nullList", (List<String>)null );
-    }
-
-    void checkA( boolean expected, String pContext, String pToCheck ) {
-        Exp expectation = new Exp();
-        assertEquals( pToCheck, NotEmpty.Assert.namedValueExpectation( pContext, pToCheck, expectation ) );
-        checkExpectation( expected, expectation.params, pContext, pToCheck );
-    }
-
-    void checkA( boolean expected, String pContext, List<String> pToCheck ) {
-        Exp expectation = new Exp();
-        assertEquals( pToCheck, NotEmpty.Assert.namedValueExpectation( pContext, pToCheck, expectation ) );
-        checkExpectation( expected, expectation.params, pContext, pToCheck );
+        check_Assert( NotEmpty.Assert, OurStringParams );
+        check_AssertList( NotEmpty.Assert, OurListParams );
     }
 
     @Test
-    void _AssertExceptionArgument() {
-
-        checkEArgument( true, "Spaces", Collections.singletonList( " " ) );
-        checkEArgument( true, "Space", " " );
-        checkEArgument( false, "!Spaces", Collections.emptyList() );
-        checkEArgument( false, "!Space", "" );
-        checkEArgument( false, "null", (String)null );
-        checkEArgument( false, "nullList", (List<String>)null );
-    }
-
-    void checkEArgument( boolean expected, String pContext, String pToCheck ) {
-        RuntimeException rte = null;
-        try {
-            assertEquals( pToCheck, NotEmpty.AssertArgument.namedValue( pContext, pToCheck ) );
-        } catch (RuntimeException e) {
-            rte = e;
-        }
-        checkExpectationArgument( expected, rte );
-    }
-
-    void checkEArgument( boolean expected, String pContext, List<String> pToCheck ) {
-        RuntimeException rte = null;
-        try {
-            assertEquals( pToCheck, NotEmpty.AssertArgument.namedValue( pContext, pToCheck ) );
-        } catch (RuntimeException e) {
-            rte = e;
-        }
-        checkExpectationArgument( expected, rte );
-    }
-
-    void checkExpectationArgument( boolean expected, RuntimeException rte ) {
-        if ( expected ) {
-            assertNull( rte );
-        } else {
-            assertInstanceOf( IllegalArgumentException.class, rte );
-        }
+    void _AssertArgument() {
+        new _Asserter( NotEmpty.AssertArgument, IllegalArgumentException.class )
+                .checkAll();
     }
 
     @Test
-    void _AssertExceptionState() {
-        checkEState( true, "Spaces", Collections.singletonList( " " ) );
-        checkEState( true, "Space", " " );
-        checkEState( false, "!Spaces", Collections.emptyList() );
-        checkEState( false, "!Space", "" );
-        checkEState( false, "null", (String)null );
-        checkEState( false, "nullList", (List<String>)null );
+    void _AssertState() {
+        new _Asserter( NotEmpty.AssertState, IllegalStateException.class )
+                .checkAll();
     }
 
-    void checkEState( boolean expected, String pContext, String pToCheck ) {
-        RuntimeException rte = null;
-        try {
-            assertEquals( pToCheck, NotEmpty.AssertState.namedValue( pContext, pToCheck ) );
-        } catch (RuntimeException e) {
-            rte = e;
+    @Test
+    void _AssertError() {
+        new _Asserter( NotEmpty.AssertError, Error.class )
+                .checkAll();
+    }
+
+    private static class _Asserter {
+        private final Assert_rTypedWithExpectationWithCollection<String> asserter;
+        private final Class<?> expectedThrowableClass;
+
+        public _Asserter( Assert_rTypedWithExpectationWithCollection<String> pAsserter, Class<?> pExpectedThrowableClass ) {
+            asserter = pAsserter;
+            expectedThrowableClass = pExpectedThrowableClass;
         }
-        checkExpectationState( expected, rte );
-    }
 
-    void checkEState( boolean expected, String pContext, List<String> pToCheck ) {
-        RuntimeException rte = null;
-        try {
-            assertEquals( pToCheck, NotEmpty.AssertState.namedValue( pContext, pToCheck ) );
-        } catch (RuntimeException e) {
-            rte = e;
+        void checkAll() {
+            check( true, "Spaces", Collections.singletonList( " " ) );
+            check( true, "Space", " " );
+            check( false, "!Spaces", Collections.emptyList() );
+            check( false, "!Space", "" );
+            check( false, "null", (String)null );
+            check( false, "nullList", (List<String>)null );
         }
-        checkExpectationState( expected, rte );
-    }
 
-    void checkExpectationState( boolean expected, RuntimeException rte ) {
-        if ( expected ) {
-            assertNull( rte );
-        } else {
-            assertInstanceOf( IllegalStateException.class, rte );
+        void check( boolean expected, String pContext, String pToCheck ) {
+            String actual;
+            try {
+                actual = asserter.namedValue( pContext, pToCheck );
+            }
+            catch ( Throwable e ) {
+                checkT( expected, e );
+                return;
+            }
+            assertEquals( pToCheck, actual );
+        }
+
+        void check( boolean expected, String pContext, List<String> pToCheck ) {
+            List<String> actual;
+            try {
+                actual = asserter.namedValue( pContext, pToCheck );
+            }
+            catch ( Throwable e ) {
+                checkT( expected, e );
+                return;
+            }
+            assertEquals( pToCheck, actual );
+        }
+
+        void checkT( boolean expected, Throwable t ) {
+            if ( expected ) {
+                assertNull( t );
+            } else {
+                assertInstanceOf( expectedThrowableClass, t );
+            }
         }
     }
 }

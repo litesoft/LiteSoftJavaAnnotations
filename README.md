@@ -10,3 +10,17 @@ On maven Central ([latest release](https://mvnrepository.com/artifact/org.liteso
     <version>1.1.3</version>
   </dependency>
 ```
+
+Some of the annotations also include behavior (mostly around data validation and normalization).
+
+The Annotations with Behavior(s) are:
+- NotEmpty
+- NotEmptyAndContainsNoNulls
+- NotNegative
+- NotNull
+- NotNullAndContainsNoNulls
+- Positive
+- Required (similar to NotNull but with different error text)
+- Significant
+
+

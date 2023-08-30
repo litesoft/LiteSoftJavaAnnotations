@@ -30,25 +30,13 @@ public @interface NotNull {
     // Legacy
     Assert_rUntypedWithLegacyErrorOn Assert = new Assert_rUntypedWithLegacyErrorOn( EXPECTATION, Check );
 
-    // TODO: AssertArgument AND AssertArgument2
-    Assert_rUntypedWithExpectation AssertArgument2 = new Assert_rUntypedWithExpectation( EXPECTATION, Check, IllegalArgument.INSTANCE );
+    Assert_rUntypedWithExpectation AssertArgument = new Assert_rUntypedWithExpectation( EXPECTATION, Check, IllegalArgument.INSTANCE );
     Assert_rUntypedWithExpectation AssertState = new Assert_rUntypedWithExpectation( EXPECTATION, Check, IllegalState.INSTANCE );
     Assert_rUntypedWithExpectation AssertError = new Assert_rUntypedWithExpectation( EXPECTATION, Check, ThrowError.INSTANCE );
 
     class ConstrainTo {
-        public static String valueOr( String pToCheck, String pValueIfNull ) {
-            return (pToCheck != null) ? pToCheck : pValueIfNull;
-        }
-
         public static <T> T valueOr( T pToCheck, T pValueIfNull ) {
             return (pToCheck != null) ? pToCheck : pValueIfNull;
-        }
-    }
-
-    class AssertArgument {
-        public static <T> T namedValue( String pName, T pToCheck )
-                throws IllegalArgumentException {
-            return Assert.namedValueExpectation( pName, pToCheck, IllegalArgument.INSTANCE );
         }
     }
 

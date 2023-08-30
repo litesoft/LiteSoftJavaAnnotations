@@ -1,18 +1,12 @@
 package org.litesoft.annotations;
 
 import java.util.Collections;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class NotNullTest extends TestSupport {
-    private static final Object[] EMPTY = {};
-    private static final Object[] JUST_NULLS = {null};
-    private static final Object[] VALUES = {5, 2, null, 7, "Martin Fowler"};
-
     @Override
     protected String getExpectation() {
         return NotNull.EXPECTATION;
@@ -20,13 +14,11 @@ class NotNullTest extends TestSupport {
 
     @Test
     void _Check() {
-        assertTrue( NotNull.Check.value( " " ) );
-        assertTrue( NotNull.Check.value( "" ) );
-        assertFalse( NotNull.Check.value( (String)null ) );
-
         assertTrue( NotNull.Check.value( Collections.singletonList( " " ) ) );
+        assertTrue( NotNull.Check.value( " " ) );
         assertTrue( NotNull.Check.value( Collections.emptyList() ) );
-        assertFalse( NotNull.Check.value( (List<String>)null ) );
+        assertTrue( NotNull.Check.value( "" ) );
+        assertFalse( NotNull.Check.value( null ) );
     }
 
     @Test
@@ -56,7 +48,7 @@ class NotNullTest extends TestSupport {
 
         try {
             Object error2 = NotNull.Assert.errorOn( "Error2", null );
-            fail("Unexpected response of: " + error2);
+            fail( "Unexpected response of: " + error2 );
         }
         catch ( Error expected ) {
             assertTrue( expected.getMessage().contains( "Error2" ) );
@@ -70,15 +62,21 @@ class NotNullTest extends TestSupport {
     }
 
     @Test
+    void constrainTo() {
+        String whatever = "whatever";
+        String notWhatever = "!whatever";
+        assertEquals( whatever, NotNull.ConstrainTo.valueOr( whatever, notWhatever ) );
+        assertEquals( notWhatever, NotNull.ConstrainTo.valueOr( null, notWhatever ) );
+    }
+
+    @Test
     void countNotNull() {
         assertEquals( 0, NotNull.Count.of( EMPTY ), "EMPTY" );
         assertEquals( 0, NotNull.Count.of( JUST_NULLS ), "JUST_NULLS" );
         assertEquals( 4, NotNull.Count.of( VALUES ), "VALUES" );
     }
 
-    @Test
-    void constrainTo() {
-        assertEquals( "whatever", NotNull.ConstrainTo.valueOr( "whatever", "!whatever" ) );
-        assertEquals( "!whatever", NotNull.ConstrainTo.valueOr( null, "!whatever" ) );
-    }
+    private static final Object[] EMPTY = {};
+    private static final Object[] JUST_NULLS = {null};
+    private static final Object[] VALUES = {5, 2, null, 7, "Martin Fowler"};
 }
