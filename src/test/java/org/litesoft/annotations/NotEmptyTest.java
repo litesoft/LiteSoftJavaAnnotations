@@ -4,13 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.litesoft.annotations.support.Assert_rTyped;
-import org.litesoft.annotations.support.Assert_rTypedWithCollection;
 import org.litesoft.annotations.support.Assert_rTypedWithExpectationWithCollection;
-import org.litesoft.annotations.support.Check_r;
-import org.litesoft.annotations.support.Check_rWithCollection;
-import org.litesoft.annotations.support.Validate_r;
-import org.litesoft.annotations.support.Validate_rWithCollection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
