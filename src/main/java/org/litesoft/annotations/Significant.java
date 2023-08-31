@@ -40,28 +40,6 @@ public @interface Significant {
     Assert_rTypedWithNormalizerAndExpectation<String> AssertState = new Assert_rTypedWithNormalizerAndExpectation<>( EXPECTATION, SignificantNormalizer.INSTANCE, IllegalState.INSTANCE );
     Assert_rTypedWithNormalizerAndExpectation<String> AssertError = new Assert_rTypedWithNormalizerAndExpectation<>( EXPECTATION, SignificantNormalizer.INSTANCE, ThrowError.INSTANCE );
 
-//    class Assert {
-//        public static String namedValueExpectation( String pName, String pToCheck, Expectation pExpectation )
-//                throws IllegalArgumentException {
-//            String zResult = ConstrainTo.valueOrNull( pToCheck );
-//            if ( zResult == null ) {
-//                pExpectation.unmet( pName, pToCheck, EXPECTATION );
-//            }
-//            return zResult;
-//        }
-//    }
-//
-//    class AssertArgument {
-//        public static String namedValue( String pName, String pToCheck )
-//                throws IllegalArgumentException {
-//            return Assert.namedValueExpectation( pName, pToCheck, IllegalArgument.INSTANCE );
-//        }
-//    }
-//
-//    /**
-//     * TODO: AssertArgument, AssertState, AssertError
-//     */
-
     class ConstrainTo {
         public static String valueOrNull( String pToCheck ) {
             return valueOr( pToCheck, null );

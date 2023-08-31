@@ -4,9 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.litesoft.annotations.support.Assert_rTypedWithExpectationWithCollection;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class NotEmptyTest extends TestSupport {
     @Override
@@ -44,70 +41,25 @@ class NotEmptyTest extends TestSupport {
 
     @Test
     void _AssertArgument() {
-        new _Asserter( NotEmpty.AssertArgument, IllegalArgumentException.class )
-                .checkAll();
+        new _Asserter_Typed_CheckParams<>( NotEmpty.AssertArgument, IllegalArgumentException.class )
+                .checkAll( OurStringParams );
+        new _Asserter_Typed_CheckParamsList<>( NotEmpty.AssertArgument, IllegalArgumentException.class )
+                .checkAll( OurListParams );
     }
 
     @Test
     void _AssertState() {
-        new _Asserter( NotEmpty.AssertState, IllegalStateException.class )
-                .checkAll();
+        new _Asserter_Typed_CheckParams<>( NotEmpty.AssertState, IllegalStateException.class )
+                .checkAll( OurStringParams );
+        new _Asserter_Typed_CheckParamsList<>( NotEmpty.AssertState, IllegalStateException.class )
+                .checkAll( OurListParams );
     }
 
     @Test
     void _AssertError() {
-        new _Asserter( NotEmpty.AssertError, Error.class )
-                .checkAll();
-    }
-
-    private static class _Asserter {
-        private final Assert_rTypedWithExpectationWithCollection<String> asserter;
-        private final Class<?> expectedThrowableClass;
-
-        public _Asserter( Assert_rTypedWithExpectationWithCollection<String> pAsserter, Class<?> pExpectedThrowableClass ) {
-            asserter = pAsserter;
-            expectedThrowableClass = pExpectedThrowableClass;
-        }
-
-        void checkAll() {
-            check( true, "Spaces", Collections.singletonList( " " ) );
-            check( true, "Space", " " );
-            check( false, "!Spaces", Collections.emptyList() );
-            check( false, "!Space", "" );
-            check( false, "null", (String)null );
-            check( false, "nullList", (List<String>)null );
-        }
-
-        void check( boolean expected, String pContext, String pToCheck ) {
-            String actual;
-            try {
-                actual = asserter.namedValue( pContext, pToCheck );
-            }
-            catch ( Throwable e ) {
-                checkT( expected, e );
-                return;
-            }
-            assertEquals( pToCheck, actual );
-        }
-
-        void check( boolean expected, String pContext, List<String> pToCheck ) {
-            List<String> actual;
-            try {
-                actual = asserter.namedValue( pContext, pToCheck );
-            }
-            catch ( Throwable e ) {
-                checkT( expected, e );
-                return;
-            }
-            assertEquals( pToCheck, actual );
-        }
-
-        void checkT( boolean expected, Throwable t ) {
-            if ( expected ) {
-                assertNull( t );
-            } else {
-                assertInstanceOf( expectedThrowableClass, t );
-            }
-        }
+        new _Asserter_Typed_CheckParams<>( NotEmpty.AssertError, Error.class )
+                .checkAll( OurStringParams );
+        new _Asserter_Typed_CheckParamsList<>( NotEmpty.AssertError, Error.class )
+                .checkAll( OurListParams );
     }
 }

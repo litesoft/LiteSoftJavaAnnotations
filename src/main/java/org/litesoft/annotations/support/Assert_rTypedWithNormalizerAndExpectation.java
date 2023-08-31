@@ -11,7 +11,7 @@ import org.litesoft.annotations.expectations.Expectation;
  *
  * @param <T> the type to be checked
  */
-public class Assert_rTypedWithNormalizerAndExpectation<T> extends UnmetCheck {
+public class Assert_rTypedWithNormalizerAndExpectation<T> extends UnmetCheck implements Assert_rWithExpectation<T> {
     private final Normalize_r<T> mNormalize_r;
 
     protected final Expectation mExpectation;
@@ -22,10 +22,12 @@ public class Assert_rTypedWithNormalizerAndExpectation<T> extends UnmetCheck {
         mExpectation = assertNotNull( pExpectation );
     }
 
+    @Override
     public T namedValue( String pName, T pToCheck ) {
         return contextValue( () -> pName, pToCheck );
     }
 
+    @Override
     public T contextValue( Supplier<String> pContext, T pToCheck ) {
         T result = mNormalize_r.normalizeToNull( pToCheck );
         acceptable( result != null, pContext, pToCheck, mExpectation );

@@ -1,6 +1,7 @@
 package org.litesoft.annotations;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -12,37 +13,26 @@ class NotNullTest extends TestSupport {
         return NotNull.EXPECTATION;
     }
 
+    private static final List<CheckParams<Object>> OurParams = new ListOf<CheckParams<Object>>()
+            .with( new CheckParams<>( true, "Space", " " ) )
+            .with( new CheckParams<>( true, "!Space", "" ) )
+            .with( new CheckParams<>( true, "Spaces", Collections.singletonList( " " ) ) )
+            .with( new CheckParams<>( true, "!Spaces", Collections.emptyList() ) )
+            .with( new CheckParams<>( false, "null", null ) );
+
     @Test
     void _Check() {
-        assertTrue( NotNull.Check.value( Collections.singletonList( " " ) ) );
-        assertTrue( NotNull.Check.value( " " ) );
-        assertTrue( NotNull.Check.value( Collections.emptyList() ) );
-        assertTrue( NotNull.Check.value( "" ) );
-        assertFalse( NotNull.Check.value( null ) );
+        check_Check( NotNull.Check, OurParams );
     }
 
     @Test
     void _Validate() {
-        checkV( true, "Spaces", Collections.singletonList( " " ) );
-        checkV( true, "Space", " " );
-        checkV( true, "!Spaces", Collections.emptyList() );
-        checkV( true, "!Space", "" );
-        checkV( false, "null", null );
-    }
-
-    void checkV( boolean expected, String pContext, Object pToCheck ) {
-        Exp expectation = new Exp();
-        assertEquals( expected, NotNull.Validate.value( pContext, pToCheck, expectation ) );
-        checkExpectation( expected, expectation.params, pContext, pToCheck );
+        check_Validate( NotNull.Validate, OurParams );
     }
 
     @Test
     void _Assert() {
-        checkA( true, "Spaces", Collections.singletonList( " " ) );
-        checkA( true, "Space", " " );
-        checkA( true, "!Spaces", Collections.emptyList() );
-        checkA( true, "!Space", "" );
-        checkA( false, "null", null );
+        check_Assert( NotNull.Assert, OurParams );
 
         assertEquals( "Fred", NotNull.Assert.errorOn( "Error1", "Fred" ) );
 
@@ -55,10 +45,22 @@ class NotNullTest extends TestSupport {
         }
     }
 
-    void checkA( boolean expected, String pContext, Object pToCheck ) {
-        Exp expectation = new Exp();
-        assertEquals( pToCheck, NotNull.Assert.namedValueExpectation( pContext, pToCheck, expectation ) );
-        checkExpectation( expected, expectation.params, pContext, pToCheck );
+    @Test
+    void _AssertArgument() {
+        new _Asserter_Untyped_CheckParams( NotNull.AssertArgument, IllegalArgumentException.class )
+                .checkAll( OurParams );
+    }
+
+    @Test
+    void _AssertState() {
+        new _Asserter_Untyped_CheckParams( NotNull.AssertState, IllegalStateException.class )
+                .checkAll( OurParams );
+    }
+
+    @Test
+    void _AssertError() {
+        new _Asserter_Untyped_CheckParams( NotNull.AssertError, Error.class )
+                .checkAll( OurParams );
     }
 
     @Test
