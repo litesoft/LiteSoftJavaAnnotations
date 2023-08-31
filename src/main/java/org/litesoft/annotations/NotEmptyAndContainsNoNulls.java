@@ -6,9 +6,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.Collection;
 
-import org.litesoft.annotations.expectations.Expectation;
 import org.litesoft.annotations.expectations.IllegalArgument;
-import org.litesoft.annotations.expectations.Validator;
+import org.litesoft.annotations.expectations.IllegalState;
+import org.litesoft.annotations.expectations.ThrowError;
+import org.litesoft.annotations.support.CollectionAssert_r;
+import org.litesoft.annotations.support.CollectionAssert_rWithExpectation;
+import org.litesoft.annotations.support.CollectionCheck_r;
+import org.litesoft.annotations.support.CollectionValidate_r;
 
 /**
  * This class has been derived from the public domain code at: <a href="https://github.com/litesoft/LiteSoftCommonFoundation">LiteSoftCommonFoundation</a>
@@ -19,42 +23,18 @@ import org.litesoft.annotations.expectations.Validator;
 public @interface NotEmptyAndContainsNoNulls {
     String EXPECTATION = "Not Empty And Contains No Nulls";
 
-    /**
-     * TODO: AssertArgument, AssertState, AssertError
-     *
-     * @see Validator
-     */
-    class Validate {
-        public static <T extends Collection<?>> boolean value( String pName, T pToCheck, Expectation pExpectation ) {
-            boolean zAcceptable = Check.value( pToCheck );
-            if ( !zAcceptable ) {
-                pExpectation.unmet( pName, pToCheck, EXPECTATION );
-            }
-            return zAcceptable;
+    CollectionCheck_r Check = new CollectionCheck_r() {
+        @Override
+        protected boolean notNullTestT( Collection<?> pToCheck ) {
+            return !pToCheck.isEmpty();
         }
-    }
+    };
 
-    class Check {
-        public static <T extends Collection<?>> boolean value( T pToCheck ) {
-            return (null != pToCheck) && !pToCheck.isEmpty() // Left to Right!
-                   && NotNullAndContainsNoNulls.Check.anyNulls( pToCheck );
-        }
-    }
+    CollectionValidate_r Validate = new CollectionValidate_r( EXPECTATION, Check );
 
-    class Assert {
-        public static <T extends Collection<?>> T namedValueExpectation( String pName, T pToCheck, Expectation pExpectation ) {
-            boolean zAcceptable = Check.value( pToCheck );
-            if ( !zAcceptable ) {
-                pExpectation.unmet( pName, null, EXPECTATION );
-            }
-            return pToCheck;
-        }
-    }
+    CollectionAssert_r Assert = new CollectionAssert_r( EXPECTATION, Check );
 
-    class AssertArgument {
-        public static <T extends Collection<?>> T namedValue( String pName, T pToCheck )
-                throws IllegalArgumentException {
-            return Assert.namedValueExpectation( pName, pToCheck, IllegalArgument.INSTANCE );
-        }
-    }
+    CollectionAssert_rWithExpectation AssertArgument = new CollectionAssert_rWithExpectation( EXPECTATION, Check, IllegalArgument.INSTANCE );
+    CollectionAssert_rWithExpectation AssertState = new CollectionAssert_rWithExpectation( EXPECTATION, Check, IllegalState.INSTANCE );
+    CollectionAssert_rWithExpectation AssertError = new CollectionAssert_rWithExpectation( EXPECTATION, Check, ThrowError.INSTANCE );
 }
