@@ -9,8 +9,8 @@ import org.litesoft.annotations.support.Assert_rTyped;
 import org.litesoft.annotations.support.Assert_rTypedWithCollection;
 import org.litesoft.annotations.support.Assert_rTypedWithExpectationWithCollection;
 import org.litesoft.annotations.support.Assert_rTypedWithNormalizer;
+import org.litesoft.annotations.support.Assert_rUntyped;
 import org.litesoft.annotations.support.Assert_rUntypedWithExpectation;
-import org.litesoft.annotations.support.Assert_rUntypedWithLegacyErrorOn;
 import org.litesoft.annotations.support.Assert_rWithExpectation;
 import org.litesoft.annotations.support.Check_r;
 import org.litesoft.annotations.support.Check_rWithCollection;
@@ -52,28 +52,28 @@ public abstract class TestSupport {
         }
     }
 
-    protected <T> void check_Check( Check_r<T> checker, List<? extends CheckParams<T>> params) {
+    protected <T> void check_Check( Check_r<T> checker, List<? extends CheckParams<T>> params ) {
         for ( CheckParams<T> entry : params ) {
             boolean result = checker.value( entry.toCheck );
             assertEquals( entry.expectedResult, result, entry.contextMsg );
         }
     }
 
-    protected <T> void check_CheckList( Check_rWithCollection<T> checker, List<? extends CheckParamsList<T>> params) {
+    protected <T> void check_CheckList( Check_rWithCollection<T> checker, List<? extends CheckParamsList<T>> params ) {
         for ( CheckParamsList<T> entry : params ) {
             boolean result = checker.value( entry.toCheck );
             assertEquals( entry.expectedResult, result, entry.contextMsg );
         }
     }
 
-    protected <T> void check_CheckList( CollectionCheck_r checker, List<? extends CheckParamsList<T>> params) {
+    protected <T> void check_CheckList( CollectionCheck_r checker, List<? extends CheckParamsList<T>> params ) {
         for ( CheckParamsList<T> entry : params ) {
             boolean result = checker.value( entry.toCheck );
             assertEquals( entry.expectedResult, result, entry.contextMsg );
         }
     }
 
-    protected <T> void check_Validate( Validate_r<T> validator, List<? extends CheckParams<T>> params) {
+    protected <T> void check_Validate( Validate_r<T> validator, List<? extends CheckParams<T>> params ) {
         for ( CheckParams<T> entry : params ) {
             Exp expectation = new Exp();
             boolean result = validator.value( entry.contextMsg, entry.toCheck, expectation );
@@ -82,21 +82,30 @@ public abstract class TestSupport {
         }
     }
 
-    protected <T> void check_ValidateList( Validate_rWithCollection<T> validator, List<? extends CheckParamsList<T>> params) {
+    protected <T> void check_ValidateList( Validate_rWithCollection<T> validator, List<? extends CheckParamsList<T>> params ) {
         for ( CheckParamsList<T> entry : params ) {
             Exp expectation = new Exp();
-            boolean result = validator.value( entry.contextMsg, entry.toCheck, expectation);
+            boolean result = validator.value( entry.contextMsg, entry.toCheck, expectation );
             assertEquals( entry.expectedResult, result, entry.contextMsg );
             checkExpectation( result, expectation.params, entry.contextMsg, entry.toCheck );
         }
     }
 
-    protected <T> void check_ValidateList( CollectionValidate_r validator, List<CheckParamsList<T>> params) {
+    protected <T> void check_ValidateList( CollectionValidate_r validator, List<CheckParamsList<T>> params ) {
         for ( CheckParamsList<T> entry : params ) {
             Exp expectation = new Exp();
-            boolean result = validator.value( entry.contextMsg, entry.toCheck, expectation);
+            boolean result = validator.value( entry.contextMsg, entry.toCheck, expectation );
             assertEquals( entry.expectedResult, result, entry.contextMsg );
             checkExpectation( result, expectation.params, entry.contextMsg, entry.toCheck );
+        }
+    }
+
+    protected <T> void check_Assert( Assert_rUntyped asserter, List<? extends CheckParams<T>> params ) {
+        for ( CheckParams<T> entry : params ) {
+            Exp expectation = new Exp();
+            T result = asserter.namedValueExpectation( entry.contextMsg, entry.toCheck, expectation );
+            assertEquals( entry.toCheck, result, entry.contextMsg );
+            checkExpectation( entry.expectedResult, expectation.params, entry.contextMsg, entry.toCheck );
         }
     }
 
@@ -122,15 +131,6 @@ public abstract class TestSupport {
         for ( CheckParamsList<T> entry : params ) {
             Exp expectation = new Exp();
             List<T> result = asserter.namedValueExpectation( entry.contextMsg, entry.toCheck, expectation );
-            assertEquals( entry.toCheck, result, entry.contextMsg );
-            checkExpectation( entry.expectedResult, expectation.params, entry.contextMsg, entry.toCheck );
-        }
-    }
-
-    protected void check_Assert( Assert_rUntypedWithLegacyErrorOn asserter, List<CheckParams<Object>> params ) {
-        for ( CheckParams<?> entry : params ) {
-            Exp expectation = new Exp();
-            Object result = asserter.namedValueExpectation( entry.contextMsg, entry.toCheck, expectation );
             assertEquals( entry.toCheck, result, entry.contextMsg );
             checkExpectation( entry.expectedResult, expectation.params, entry.contextMsg, entry.toCheck );
         }
@@ -262,9 +262,9 @@ public abstract class TestSupport {
             asserter = pAsserter;
         }
 
-        public void checkAll(List<CheckParams<Object>> OurParams) {
+        public void checkAll( List<CheckParams<Object>> OurParams ) {
             for ( CheckParams<Object> params : OurParams ) {
-                check(params);
+                check( params );
             }
         }
 
@@ -289,9 +289,9 @@ public abstract class TestSupport {
             asserter = pAsserter;
         }
 
-        public void checkAll(List<CheckParamsList<T>> OurParams) {
+        public void checkAll( List<CheckParamsList<T>> OurParams ) {
             for ( CheckParamsList<T> params : OurParams ) {
-                check(params);
+                check( params );
             }
         }
 
@@ -316,9 +316,9 @@ public abstract class TestSupport {
             asserter = pAsserter;
         }
 
-        public <T> void checkAll( List<CheckParamsList<T>> OurParams) {
+        public <T> void checkAll( List<CheckParamsList<T>> OurParams ) {
             for ( CheckParamsList<?> params : OurParams ) {
-                check(params);
+                check( params );
             }
         }
 
@@ -343,9 +343,9 @@ public abstract class TestSupport {
             asserter = pAsserter;
         }
 
-        public void checkAll(List<CheckParams<T>> OurParams) {
+        public void checkAll( List<CheckParams<T>> OurParams ) {
             for ( CheckParams<T> params : OurParams ) {
-                check(params);
+                check( params );
             }
         }
 
@@ -370,9 +370,9 @@ public abstract class TestSupport {
             asserter = pAsserter;
         }
 
-        public void checkAll(List<CheckParamsWithMorphedOutput<T>> OurParams) {
+        public void checkAll( List<CheckParamsWithMorphedOutput<T>> OurParams ) {
             for ( CheckParamsWithMorphedOutput<T> params : OurParams ) {
-                check(params);
+                check( params );
             }
         }
 

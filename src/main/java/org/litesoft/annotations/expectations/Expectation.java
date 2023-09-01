@@ -2,6 +2,7 @@ package org.litesoft.annotations.expectations;
 
 import java.util.function.Supplier;
 
+@SuppressWarnings("unused")
 public interface Expectation {
     String DEFAULT_ON_INSIGNIFICANT = ".!N/A!.";
 

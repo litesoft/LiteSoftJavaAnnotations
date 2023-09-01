@@ -30,8 +30,16 @@ public @interface NotEmptyAndContainsNoNulls {
         }
     };
 
+    /**
+     * Legacy - Similar to <code>Assert</code> in that an <code>Expectation</code> thrower must be provided
+     */
     CollectionValidate_r Validate = new CollectionValidate_r( EXPECTATION, Check );
 
+    /**
+     * Generic Assertion that requires an <code>Expectation</code> thrower.
+     *
+     * @see org.litesoft.annotations.expectations.Expectation
+     */
     CollectionAssert_r Assert = new CollectionAssert_r( EXPECTATION, Check );
 
     CollectionAssert_rWithExpectation AssertArgument = new CollectionAssert_rWithExpectation( EXPECTATION, Check, IllegalArgument.INSTANCE );

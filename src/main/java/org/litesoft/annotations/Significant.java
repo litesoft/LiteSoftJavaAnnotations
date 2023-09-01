@@ -26,14 +26,20 @@ public @interface Significant {
     Check_r<String> Check = new Check_r<>() {
         @Override
         protected boolean notNullTestT( String pToCheck ) {
-            return (null != ConstrainTo.valueOrNull( pToCheck ));
+            return null != ConstrainTo.valueOrNull( pToCheck );
         }
     };
 
-    // Legacy
+    /**
+     * Legacy - Similar to <code>Assert</code> in that an <code>Expectation</code> thrower must be provided
+     */
     Validate_r<String> Validate = new Validate_r<>( EXPECTATION, Check );
 
-    // Legacy
+    /**
+     * Generic Assertion that requires an <code>Expectation</code> thrower.
+     *
+     * @see org.litesoft.annotations.expectations.Expectation
+     */
     Assert_rTypedWithNormalizer<String> Assert = new Assert_rTypedWithNormalizer<>( EXPECTATION, SignificantNormalizer.INSTANCE );
 
     Assert_rTypedWithNormalizerAndExpectation<String> AssertArgument = new Assert_rTypedWithNormalizerAndExpectation<>( EXPECTATION, SignificantNormalizer.INSTANCE, IllegalArgument.INSTANCE );
