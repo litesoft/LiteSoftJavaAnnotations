@@ -19,6 +19,7 @@ import org.litesoft.annotations.expectations.Expectation;
  * <p>
  * <code>null</code>s or <code>NaN</code>s are never acceptable!
  */
+@SuppressWarnings("unused")
 public class Assert_rNumber extends UnmetCheck {
     private final Check_rNumber mChecker;
 

@@ -17,31 +17,32 @@ import java.util.concurrent.atomic.LongAdder;
  * <code>null</code>s or <code>NaN</code>s are never acceptable!
  */
 public abstract class Check_rNumber {
-    public boolean value( Byte pToCheck ) { return (pToCheck != null) && value( pToCheck.byteValue() ); }
-    public boolean value( Short pToCheck ) { return (pToCheck != null) && value( pToCheck.shortValue() ); }
-    public boolean value( Integer pToCheck ) { return (pToCheck != null) && value( pToCheck.intValue() ); }
-    public boolean value( Long pToCheck ) { return (pToCheck != null) && value( pToCheck.longValue() ); }
-    public boolean value( Float pToCheck ) { return (pToCheck != null) && value( pToCheck.floatValue() ); }
-    public boolean value( Double pToCheck ) { return (pToCheck != null) && value( pToCheck.doubleValue() ); }
-    public boolean value( AtomicInteger pToCheck ) { return (pToCheck != null) && value( pToCheck.intValue() ); }
-    public boolean value( AtomicLong pToCheck ) { return (pToCheck != null) && value( pToCheck.longValue() ); }
-    public boolean value( DoubleAccumulator pToCheck ) { return (pToCheck != null) && value( pToCheck.doubleValue() ); }
-    public boolean value( DoubleAdder pToCheck ) { return (pToCheck != null) && value( pToCheck.doubleValue() ); }
-    public boolean value( LongAccumulator pToCheck ) { return (pToCheck != null) && value( pToCheck.longValue() ); }
-    public boolean value( LongAdder pToCheck ) { return (pToCheck != null) && value( pToCheck.longValue() ); }
+    public final boolean value( Byte pToCheck ) { return (pToCheck != null) && value( pToCheck.byteValue() ); }
+    public final boolean value( Short pToCheck ) { return (pToCheck != null) && value( pToCheck.shortValue() ); }
+    public final boolean value( Integer pToCheck ) { return (pToCheck != null) && value( pToCheck.intValue() ); }
+    public final boolean value( Long pToCheck ) { return (pToCheck != null) && value( pToCheck.longValue() ); }
+    public final boolean value( Float pToCheck ) { return (pToCheck != null) && value( pToCheck.floatValue() ); }
+    public final boolean value( Double pToCheck ) { return (pToCheck != null) && value( pToCheck.doubleValue() ); }
 
-    public boolean value( byte pToCheck ) { return value( (long)pToCheck ); }
-    public boolean value( short pToCheck ) { return value( (long)pToCheck ); }
-    public boolean value( int pToCheck ) { return value( (long)pToCheck ); }
+    public final boolean value( AtomicInteger pToCheck ) { return (pToCheck != null) && value( pToCheck.intValue() ); }
+    public final boolean value( AtomicLong pToCheck ) { return (pToCheck != null) && value( pToCheck.longValue() ); }
+    public final boolean value( DoubleAccumulator pToCheck ) { return (pToCheck != null) && value( pToCheck.doubleValue() ); }
+    public final boolean value( DoubleAdder pToCheck ) { return (pToCheck != null) && value( pToCheck.doubleValue() ); }
+    public final boolean value( LongAccumulator pToCheck ) { return (pToCheck != null) && value( pToCheck.longValue() ); }
+    public final boolean value( LongAdder pToCheck ) { return (pToCheck != null) && value( pToCheck.longValue() ); }
 
-    public abstract boolean value( long pToCheck );
-    public boolean value( float pToCheck ) { return !Float.isNaN( pToCheck ) && nonNan( pToCheck ); }
-    public boolean value( double pToCheck ) {return !Double.isNaN( pToCheck ) && nonNan( pToCheck ); }
+    public final boolean value( byte pToCheck ) { return longTestIt( pToCheck ); }
+    public final boolean value( short pToCheck ) { return longTestIt( pToCheck ); }
+    public final boolean value( int pToCheck ) { return longTestIt( pToCheck ); }
+    public final boolean value( long pToCheck ) { return longTestIt( pToCheck ); }
+    public final boolean value( float pToCheck ) { return !Float.isNaN( pToCheck ) && nonNanTestIt( pToCheck ); }
+    public final boolean value( double pToCheck ) {return !Double.isNaN( pToCheck ) && nonNanTestIt( pToCheck ); }
 
-    public boolean value( BigInteger pToCheck ) { return (pToCheck != null) && notNullTest( pToCheck ); }
-    public boolean value( BigDecimal pToCheck ) { return (pToCheck != null) && notNullTest( pToCheck ); }
-
-    protected abstract boolean nonNan( double pToCheck );
-    protected abstract boolean notNullTest( BigInteger pToCheck );
-    protected abstract boolean notNullTest( BigDecimal pToCheck );
+    public final boolean value( BigInteger pToCheck ) { return (pToCheck != null) && notNullTestIt( pToCheck ); }
+    public final boolean value( BigDecimal pToCheck ) { return (pToCheck != null) && notNullTestIt( pToCheck ); }
+    
+    protected abstract boolean longTestIt( long pToCheck );
+    protected abstract boolean nonNanTestIt( double pToCheck );
+    protected abstract boolean notNullTestIt( BigInteger pToCheck );
+    protected abstract boolean notNullTestIt( BigDecimal pToCheck );
 }

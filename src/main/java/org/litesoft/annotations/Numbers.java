@@ -21,7 +21,7 @@ public interface Numbers {
     BigInteger ZERO_BigInteger = BigInteger.ZERO;
     BigDecimal ZERO_BigDecimal = BigDecimal.ZERO;
 
-    // The following implementations of Number are mutable and hence should be exposed as static finals:
+    // The following implementations of Number are mutable and hence should NOT be exposed as static finals:
     //    AtomicInteger
     //    AtomicLong
     //    DoubleAccumulator

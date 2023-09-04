@@ -33,16 +33,6 @@ class NotNullTest extends TestSupport {
     @Test
     void _Assert() {
         check_Assert( NotNull.Assert, OurParams );
-
-        assertEquals( "Fred", NotNull.Assert.errorOn( "Error1", "Fred" ) );
-
-        try {
-            Object error2 = NotNull.Assert.errorOn( "Error2", null );
-            fail( "Unexpected response of: " + error2 );
-        }
-        catch ( Error expected ) {
-            assertTrue( expected.getMessage().contains( "Error2" ) );
-        }
     }
 
     @Test
