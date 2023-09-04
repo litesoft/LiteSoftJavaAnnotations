@@ -7,14 +7,12 @@ import java.lang.annotation.Target;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import org.litesoft.annotations.expectations.Expectation;
 import org.litesoft.annotations.expectations.IllegalArgument;
 import org.litesoft.annotations.expectations.IllegalState;
 import org.litesoft.annotations.expectations.ThrowError;
 import org.litesoft.annotations.expectations.Validator;
 import org.litesoft.annotations.support.Assert_rNumber;
 import org.litesoft.annotations.support.Assert_rNumberWithExpectation;
-import org.litesoft.annotations.support.Assert_rUntypedWithExpectation;
 import org.litesoft.annotations.support.Check_rNumber;
 import org.litesoft.annotations.support.Validate_rNumber;
 
