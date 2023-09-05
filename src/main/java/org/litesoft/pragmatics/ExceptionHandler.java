@@ -2,7 +2,7 @@ package org.litesoft.pragmatics;
 
 @SuppressWarnings("unused")
 public interface ExceptionHandler {
-    void handle(Exception e);
+    void handle( Exception e );
 
     static ExceptionHandler exitWithMessage() {
         return Exceptions::exitWithMessage;

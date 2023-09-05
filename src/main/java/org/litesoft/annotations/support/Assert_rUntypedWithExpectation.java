@@ -18,7 +18,7 @@ public class Assert_rUntypedWithExpectation extends UnmetCheck {
         return contextValue( () -> pName, pToCheck );
     }
 
-    public <T> T contextValue( Supplier<String> pContext, T pToCheck) {
+    public <T> T contextValue( Supplier<String> pContext, T pToCheck ) {
         acceptable( mChecker.value( pToCheck ), pContext, pToCheck, mExpectation );
         return pToCheck;
     }

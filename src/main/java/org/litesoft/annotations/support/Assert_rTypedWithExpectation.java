@@ -25,7 +25,7 @@ public class Assert_rTypedWithExpectation<T> extends UnmetCheck implements Asser
     }
 
     @Override
-    public T contextValue( Supplier<String> pContext, T pToCheck) {
+    public T contextValue( Supplier<String> pContext, T pToCheck ) {
         acceptable( mChecker.value( pToCheck ), pContext, pToCheck, mExpectation );
         return pToCheck;
     }

@@ -26,6 +26,7 @@ public class CollectionCheck_r {
         }
         return true;
     }
+
     protected boolean notNullTestT( Collection<?> pToCheck ) {
         return true;
     }

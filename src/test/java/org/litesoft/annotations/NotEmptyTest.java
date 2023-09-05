@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-class NotEmptyTest extends TestSupport {
+class NotEmptyTest extends TestTypedSupport {
     @Override
     protected String getExpectation() {
         return NotEmpty.EXPECTATION;

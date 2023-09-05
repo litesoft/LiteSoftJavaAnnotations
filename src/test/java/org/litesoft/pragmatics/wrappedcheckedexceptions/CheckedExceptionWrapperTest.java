@@ -37,7 +37,7 @@ class CheckedExceptionWrapperTest {
         check( Config_rtException.class, new TimeoutConfigException() ); // Config before Timeout
 
         // Hierarchies
-        check( SQL_rtException.class, new DataTruncation(1,false, true, 22, 21) );
+        check( SQL_rtException.class, new DataTruncation( 1, false, true, 22, 21 ) );
 
         check( FileNotFound_rtException.class, new FileNotFoundException() );
         check( EOF_rtException.class, new EOFException() );

@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-class RequiredTest extends TestSupport {
+class RequiredTest extends TestUntypedSupport {
     @Override
     protected String getExpectation() {
         return Required.EXPECTATION;

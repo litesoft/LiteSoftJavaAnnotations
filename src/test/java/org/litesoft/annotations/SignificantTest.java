@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class SignificantTest extends TestSupport {
+class SignificantTest extends TestTypedMorphedSupport {
     @Override
     protected String getExpectation() {
         return Significant.EXPECTATION;
@@ -33,16 +31,6 @@ class SignificantTest extends TestSupport {
     @Test
     void _Assert() {
         check_Assert( Significant.Assert, OurParams );
-
-        assertEquals( "Fred", Significant.AssertArgument.namedValue( "Error1", "Fred" ) );
-
-        try {
-            Object error2 = Significant.AssertArgument.namedValue( "Error2", null );
-            fail( "Unexpected response of: " + error2 );
-        }
-        catch ( IllegalArgumentException expected ) {
-            assertTrue( expected.getMessage().contains( "Error2" ) );
-        }
     }
 
     @Test

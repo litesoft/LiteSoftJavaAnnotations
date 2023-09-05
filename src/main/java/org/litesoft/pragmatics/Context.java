@@ -44,10 +44,10 @@ public class Context implements Supplier<String> {
 
     @Override
     public String get() {
-        if (!mResolved) {
+        if ( !mResolved ) {
             mResolved = true;
             mRendered = mSupplier.get();
-            if (mPrefix != null) {
+            if ( mPrefix != null ) {
                 mRendered = mPrefix.get() + mRendered;
             }
         }

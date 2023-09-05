@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-class NotNullAndContainsNoNullsTest extends TestSupport {
+class NotNullAndContainsNoNullsTest extends TestCollectionSupport {
     @Override
     protected String getExpectation() {
         return NotNullAndContainsNoNulls.EXPECTATION;
