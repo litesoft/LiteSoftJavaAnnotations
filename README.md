@@ -4,7 +4,7 @@ A set of Java Annotations primarily used for documenting contractual obligations
 
 On maven Central ([latest release](https://mvnrepository.com/artifact/org.litesoft/annotations/1.1.2)):
 ```html
-  <dependency/>
+  <dependency>
     <groupId>org.litesoft</groupId>
     <artifactId>annotations</artifactId>
     <version>2.0.1</version>
