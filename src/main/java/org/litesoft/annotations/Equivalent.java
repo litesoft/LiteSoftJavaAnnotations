@@ -5,6 +5,7 @@ import org.litesoft.annotations.expectations.IllegalState;
 import org.litesoft.annotations.expectations.ThrowError;
 import org.litesoft.annotations.support.Assert_rTypedEquivalent;
 
+@SuppressWarnings("unused")
 public interface Equivalent {
     Assert_rTypedEquivalent AssertArgument = new Assert_rTypedEquivalent( IllegalArgument.INSTANCE );
     Assert_rTypedEquivalent AssertState = new Assert_rTypedEquivalent( IllegalState.INSTANCE );

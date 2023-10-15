@@ -36,7 +36,7 @@ class ValidatableDTOTest {
 
     static class OurDTO extends ValidatableDTO {
         private Boolean isTest;
-        private String sexChromosome = " XY";
+        private String sexChromosome;
 
         public OurDTO( Boolean isTest, String sexChromosome ) {
             this.isTest = isTest;

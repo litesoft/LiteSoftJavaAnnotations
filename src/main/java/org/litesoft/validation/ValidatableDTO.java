@@ -26,6 +26,7 @@ public abstract class ValidatableDTO {
         return sb.append( '}' ).toString();
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     protected static StringBuilder appendField( StringBuilder sb, String name, Object value ) {
         if ( sb.charAt( sb.length() - 1 ) != '{' ) {
             sb.append( ", " );
