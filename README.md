@@ -2,12 +2,12 @@
 
 A set of Java Annotations primarily used for documenting contractual obligations and expectations
 
-On maven Central ([latest release](https://mvnrepository.com/artifact/org.litesoft/annotations/1.1.2)):
+On maven Central ([latest release](https://mvnrepository.com/artifact/org.litesoft/annotations/2.2.0)):
 ```html
   <dependency>
     <groupId>org.litesoft</groupId>
     <artifactId>annotations</artifactId>
-    <version>2.1.1</version>
+    <version>2.2.0</version>
   </dependency>
 ```
 
