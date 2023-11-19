@@ -15,14 +15,19 @@ import org.litesoft.annotations.Positive;
  * that limits the delegation to the <code>actual</code> for each "unique exception" to
  * one per 'n' secs (<code>suppressSecs</code>).
  * <p>
- * Note: a "unique exception"'s definition of uniqueness is defined as combination of
- * the Exception's full class name AND
- * the Exceptions' full text "message" -- <code>getMessage()</code>.
+ * Note: a "unique exception"'s definition of uniqueness is defined as the combination of:
+ * <li>the Exception's full class name AND
+ * <li>the Exception's full text "message" -- <code>getMessage()</code>.
  * <p>
- * Note: Unique exception definitions are stored in maps which drop some expired
- * unique exception definitions only on additional exceptions being logged.
- * This means that once any exception passes through this class instance
- * at least one unique exception definition will be in the maps till the
+ * Note: a "unique message"'s definition (non Exception <code>log</code> method) of uniqueness
+ * is defined as the combination of:
+ * <li>a fake exception name <code>N/A</code> AND
+ * <li>the non-null <code>message</code> text.
+ * <p>
+ * Note: Unique definitions are stored in maps which drop some expired
+ * unique definitions only on additional <code>log</code> methods being called.
+ * This means that once either <code>log</code> method passes through this class
+ * instance at least the last unique definition will be in the maps till the
  * application terminates!
  */
 public class LimitingExceptionLogger implements ExceptionLogger {
@@ -53,6 +58,13 @@ public class LimitingExceptionLogger implements ExceptionLogger {
         }
     }
 
+    @Override
+    public void log( String message ) {
+        if ( (message != null) && tracker.shouldShow( message ) ) {
+            actual.log( message );
+        }
+    }
+
     static class Tracker {
         private record ExceptionNameAndMessage(String name, String message) {
         }
@@ -67,9 +79,16 @@ public class LimitingExceptionLogger implements ExceptionLogger {
             suppressMillis = suppressSecs * 1000L;
         }
 
+        public boolean shouldShow( String message ) {
+            return checkProxy( new ExceptionNameAndMessage( NON_EXCEPTION_TYPE, message ) );
+        }
+
         public boolean shouldShow( @NotNull Exception e ) {
+            return checkProxy( new ExceptionNameAndMessage( e.getClass().getName(), e.getMessage() ) );
+        }
+
+        private boolean checkProxy( ExceptionNameAndMessage exceptionProxy ) {
             long now = millisTimeSource.getAsLong();
-            var exceptionProxy = new ExceptionNameAndMessage( e.getClass().getName(), e.getMessage() );
             synchronized ( this ) {
                 purgeExpiredState( now );
                 return checkStateRe( exceptionProxy, now );
